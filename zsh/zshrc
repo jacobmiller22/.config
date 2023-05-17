@@ -1,0 +1,86 @@
+
+##
+# Default PATH
+##
+export PATH="$PATH:/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+##
+# Set XDG
+##
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export ZSH=$XDG_CONFIG_HOME/zsh/ohmyzsh/ohmyzsh/
+
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+##
+# ZSH Plugin Manager
+##
+export ZGEN_DIR=$XDG_CONFIG_HOME/zsh/zgen
+
+source $ZGEN_DIR/zgen.zsh
+
+export ZSH=$XDG_CONFIG_HOME/zsh/ohmyzsh/ohmyzsh/
+
+##
+# ZInit
+##
+autoload -Uz compinit && compinit
+
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+export ZSH=$XDG_CONFIG_HOME/zsh/ohmyzsh/ohmyzsh/
+source "${ZINIT_HOME}/zinit.zsh"
+
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light ohmyzsh/ohmyzsh
+export ZSH=$XDG_CONFIG_HOME/zsh/ohmyzsh/ohmyzsh/
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::aws
+zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
+zinit snippet OMZP::rust
+zinit snippet OMZP::command-not-found
+
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+source $XDG_CONFIG_HOME/zsh/profile
+
+setopt auto_cd
+
+##
+# P10k
+##
+# P10k customizations
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+export P10K_HOME=$XDG_CONFIG_HOME/zsh
+[[ -f $P10K_HOME/p10k.zsh ]] && source $P10K_HOME/p10k.zsh
+
+##
+# Starship
+##
+eval "$(starship init zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/p10k.zsh.
+[[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
