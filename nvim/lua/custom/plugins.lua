@@ -1,12 +1,20 @@
 local plugins = {
   {
+    "jose-elias-alvarez/null-ls.nvim",
+    ft = {"python"},
+    opts = function ()
+      return require("custom.configs.null-ls")
+    end
+  },
+  {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
         "rust-analyzer",
-        "python-lsp-server",
-        "pylint",
-        "black"
+        "mypy",
+        "ruff",
+        "black",
+        "pyright"
       }
     }
   },

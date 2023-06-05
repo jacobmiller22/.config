@@ -1,7 +1,5 @@
 local M = {}
 -- See core/mappings for more options to override
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 M.general = {
   v = {
@@ -9,7 +7,9 @@ M.general = {
     ["K"] = {":m '<-2<CR>gv=gv", "Swap line down"}
   },
   n = {
-    ["<leader>fq"] = { "<cmd>q!<CR>", "Force quit buffer"}
+    ["<leader>fq"] = { "<cmd>q!<CR>", "Force quit buffer"},
+    ["<leader>o"] = { "o<Esc>", "Insert line below, stay in normal mode"},
+    ["<leader>O"] = { "O<Esc>", "Insert line above, stay in normal mode"}
   }
 }
 return M
